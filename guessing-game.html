@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #result {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #guessInput {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    #submitBtn {
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+  <title>Guessing Game</title>
+</head>
+<body>
+  <div>
+    <div id="result"></div>
+    <input type="number" id="guessInput" min="1" max="9">
+    <button id="submitBtn" onclick="checkGuess()">Submit</button>
+  </div>
+
+  <script>
+    const randomNumber = Math.floor(Math.random() * 9) + 1;
+
+    let chances = 3;
+
+    function checkGuess() {
+      const guessInput = document.getElementById('guessInput');
+      const resultDiv = document.getElementById('result');
+
+      const userGuess = parseInt(guessInput.value);
+
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 9) {
+        resultDiv.textContent = 'Please enter a valid number between 1 and 9.';
+      } else {
+        chances--;
+
+        if (userGuess === randomNumber) {
+          resultDiv.textContent = 'Congratulations! You guessed correctly!';
+        } else if (chances > 0) {
+          resultDiv.textContent = `Wrong guess! You have ${chances} chance(s) left.`;
+        } else {
+          resultDiv.textContent = `Game over! The correct number was ${randomNumber}.`;
+          document.getElementById('submitBtn').disabled = true;
+        }
+      }
+
+      guessInput.value = '';
+    }
+  </script>
+</body>
+</html>
